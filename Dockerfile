@@ -1,6 +1,9 @@
 # Bắt đầu từ image Ubuntu mới nhất
 FROM ubuntu:20.04
 
+# Thiết lập môi trường không tương tác để tránh vấn đề tzdata
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Cập nhật và cài đặt các gói cần thiết
 RUN apt update -y && \
     apt install -y \
@@ -53,11 +56,11 @@ RUN apt update -y && \
     apt-get install -y nodejs
 
 # Cài đặt các gói Python cần thiết
-RUN pip3 install requests python-telegram-bot pytz termcolor psutil --break-system-packages
+RUN pip3 install requests python-telegram-bot pytz termcolor psutil
 
 # Cloning repo và chạy tmux
-RUN git clone https://github.com/neganok/update1 && \
-    cd update1 && \
+RUN git clone https://github.com/neganok/update && \
+    cd update && \
     unzip vip.zip && \
     tmux
 
