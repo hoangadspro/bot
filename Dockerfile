@@ -59,9 +59,11 @@ RUN apt-get update -y && \
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
+# Cài đặt npm mới nhất và gỡ lỗi kết nối nếu cần
+RUN npm install -g npm@latest --verbose
+
 # Cài đặt các gói npm cần thiết
-RUN npm install -g npm@latest && \
-    npm install -g colors set-cookie-parser request hpack axios chalk chalk@2
+RUN npm install -g colors set-cookie-parser request hpack axios chalk chalk@2 --verbose
 
 # Cài đặt các gói npm cần thiết cho Puppeteer và các plugin
 RUN npm install puppeteer puppeteer-extra puppeteer-extra-plugin-stealth puppeteer-extra-plugin-adblocker ua-parser-js async random-referer user-agents
