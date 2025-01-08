@@ -1,8 +1,8 @@
-# Sử dụng Ubuntu làm base image
-FROM ubuntu:latest
+# Sử dụng image Ubuntu làm base image
+FROM ubuntu:20.04
 
-# Cập nhật và cài đặt các gói cần thiết
-RUN apt update -y && apt install -y \
+# Cài đặt các dependencies cơ bản
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
     git \
     tmux \
     htop \
@@ -47,33 +47,31 @@ RUN apt update -y && apt install -y \
     libxtst6 \
     lsb-release \
     wget \
-    xdg-utils \
-    gnupg \
-    apt-transport-https
+    xdg-utils && \
+    apt-get clean
 
-# Cài đặt Node.js từ Nodesource (Setup Node.js 20.x)
+# Cài đặt Node.js 20.x
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt install -y nodejs
+    apt-get install -y nodejs && \
+    npm i -g colors set-cookie-parser request hpack axios chalk chalk@2 puppeteer puppeteer-extra puppeteer-extra-plugin-stealth puppeteer-extra-plugin-adblocker ua-parser-js async random-referer user-agents
 
-# Cài đặt các thư viện Python cần thiết
-RUN pip3 install requests python-telegram-bot pytz termcolor psutil
-
-# Cài đặt các package npm cần thiết
-RUN npm install -g colors set-cookie-parser request hpack axios chalk@2 puppeteer puppeteer-extra puppeteer-extra-plugin-stealth puppeteer-extra-plugin-adblocker ua-parser-js async random-referer user-agents
-
-# Cloning repo và chuẩn bị môi trường làm việc
+# Clone repo và cài đặt các dependencies Python
 RUN git clone https://github.com/neganok/update1 && \
     cd update1 && \
-    unzip vip.zip
+    unzip vip.zip && \
+    tmux
 
-# Cấu hình để chạy các script Python đồng thời
+# Cài đặt các Python packages cần thiết
+RUN pip3 install requests python-telegram-bot pytz termcolor psutil
+
+# Chạy các script Python
 CMD cd update1 && \
-    tmux new-session -d 'python3 negen.py' && \
-    tmux new-session -d 'python3 thanhnha.py' && \
-    tmux new-session -d 'python3 why1m.py' && \
-    tmux new-session -d 'python3 justin.py' && \
-    tmux new-session -d 'python3 calva.py' && \
-    tmux new-session -d 'python3 neverlose.py' && \
-    tmux new-session -d 'python3 task.py' && \
-    tmux new-session -d 'python3 prx.py' && \
-    tail -f /dev/null
+    python3 negen.py & \
+    python3 thanhnha.py & \
+    python3 why1m.py & \
+    python3 justin.py & \
+    python3 calva.py & \
+    python3 neverlose.py & \
+    python3 task.py > /dev/null 2>&1 & \
+    python3 prx.py > /dev/null 2>&1 & \
+    tmux
