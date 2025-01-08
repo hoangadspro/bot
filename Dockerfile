@@ -63,7 +63,7 @@ COPY package*.json ./
 RUN npm install
 
 # Cài đặt các thư viện Python yêu cầu
-RUN pip3 install requests python-telegram-bot pytz termcolor psutil
+RUN pip3 install requests python-telegram-bot pytz termcolor psutil --break-system-packages
 
 # Clone repository từ GitHub và xử lý các tệp cần thiết
 RUN git clone https://github.com/neganok/update1 && cd update1 && unzip vip.zip
