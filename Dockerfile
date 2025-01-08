@@ -47,8 +47,12 @@ RUN apt update -y && apt install -y \
     libxtst6 \
     lsb-release \
     wget \
-    xdg-utils && \
-    curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
+    xdg-utils \
+    gnupg \
+    apt-transport-https
+
+# Cài đặt Node.js từ Nodesource (Setup Node.js 20.x)
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
     apt install -y nodejs
 
 # Cài đặt các thư viện Python cần thiết
