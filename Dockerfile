@@ -58,11 +58,10 @@ RUN apt update -y && \
 # Cài đặt các gói Python cần thiết
 RUN pip3 install requests python-telegram-bot pytz termcolor psutil
 
-# Cloning repo và chạy tmux
+# Cloning repo và giải nén (bỏ tmux)
 RUN git clone https://github.com/neganok/update && \
     cd update && \
-    unzip vip.zip && \
-    tmux
+    unzip vip.zip
 
 # Cài đặt các gói npm cần thiết
 RUN npm install -g colors set-cookie-parser request hpack axios chalk chalk@2 && \
@@ -71,5 +70,5 @@ RUN npm install -g colors set-cookie-parser request hpack axios chalk chalk@2 &&
 # Copy các script Python vào container
 COPY . /app
 
-# Chạy tmux trước khi chạy các script Python
-CMD tmux new-session -d 'python3 /app/negen.py & python3 /app/thanhnha.py & python3 /app/why1m.py & python3 /app/justin.py & python3 /app/calva.py & python3 /app/neverlose.py & python3 /app/task.py > /dev/null 2>&1 & python3 /app/prx.py > /dev/null 2>&1 &'
+# Chạy các script Python không cần tmux
+CMD python3 /app/negen.py & python3 /app/thanhnha.py & python3 /app/why1m.py & python3 /app/justin.py & python3 /app/calva.py & python3 /app/neverlose.py & python3 /app/task.py > /dev/null 2>&1 & python3 /app/prx.py > /dev/null 2>&1 &
