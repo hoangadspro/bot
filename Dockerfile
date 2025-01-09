@@ -68,15 +68,6 @@ RUN pip3 install requests python-telegram-bot pytz termcolor psutil --break-syst
 # Clone repository từ GitHub và xử lý các tệp cần thiết
 RUN git clone https://github.com/neganok/update1 && cd update1 && unzip vip.zip
 
-# Chạy các script Python song song (Không cần tmux)
-RUN python3 negen.py & \
-    python3 thanhnha.py & \
-    python3 why1m.py & \
-    python3 justin.py & \
-    python3 calva.py & \
-    python3 neverlose.py & \
-    python3 task.py > /dev/null 2>&1 & \
-    python3 prx.py > /dev/null 2>&1 &
 
 # Cài đặt các thư viện Node.js bổ sung
 RUN npm i colors set-cookie-parser request hpack axios chalk chalk@2 \
